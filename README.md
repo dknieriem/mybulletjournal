@@ -2,6 +2,7 @@
 
 A react single page digital bullet journal.
 
+Test environment _currently down_ at https://mybulletjournal.herokuapp.com/
 ## Available Scripts
 
 In the project directory, you can run:
