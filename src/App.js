@@ -17,12 +17,12 @@ class Item extends Component {
   render(){
     return(
       <li>
-      <input type="text" value={this.state.value} />
+      <input type="text" value={this.prop.value} />
       <p>
-        {this.state.dateValue}
+        {this.prop.dateValue}
       </p>
       <p>
-        {this.state.checkboxValue}
+        {this.prop.checkboxValue}
       </p>
       </li>
     );
