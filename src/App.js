@@ -17,7 +17,7 @@ class Item extends Component {
   render(){
     return(
       <li>
-      <input type="text" value="{this.state.value}" />
+      <input type="text" value={this.state.value} />
       <p>
         {this.state.dateValue}
       </p>
