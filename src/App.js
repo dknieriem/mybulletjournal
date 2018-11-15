@@ -55,7 +55,7 @@ class List extends Component {
           <Item value={item[0]} checkboxValue={item[1]} dateValue={item[2]}
           />
       ))}
-      //<AddItemButton />
+      {/* This is a comment <AddItemButton /> */}
       </ul>
 
       );
