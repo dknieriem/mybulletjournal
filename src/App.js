@@ -1,87 +1,65 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
-//an item has text and optionally a date and a checkbox
-class Item extends Component {
-
- constructor(props){
+class TodoApp extends React.Component {
+  constructor(props) {
     super(props);
-    this.state = {
-      value: null,
-      dateValue: null,
-      checkboxValue: null,
-    };
+    this.state = { items: [], text: '' };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  render(){
-    return(
-      <li>
-      <input type="text" value={this.state.value} />
-      <p>
-        {this.state.dateValue}
-      </p>
-      <p>
-        {this.state.checkboxValue}
-      </p>
-      </li>
+  render() {
+    return (
+      <div>
+        <h3>TODO</h3>
+        <TodoList items={this.state.items} />
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="new-todo">
+            What needs to be done?
+          </label>
+          <input
+            id="new-todo"
+            onChange={this.handleChange}
+            value={this.state.text}
+          />
+          <button>
+            +
+          </button>
+        </form>
+      </div>
     );
   }
 
-}
-
-//A list has items
-class List extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      items: Array(1).fill(
-        ['your entry here', false, "2012-04-21T18:25:43-05:00"]),
-    };
+  handleChange(e) {
+    this.setState({ text: e.target.value });
   }
 
-  // renderItem(i){
-  //   const val = this.state.items[i].slice();
-  //   <Item value={val[0]} checkboxValue={val[1]} dateValue={val[2]}
-  //   />
-  // }
+  handleSubmit(e) {
+    e.preventDefault();
+    if (!this.state.text.length) {
+      return;
+    }
+    const newItem = {
+      text: this.state.text,
+      id: Date.now()
+    };
+    this.setState(state => ({
+      items: state.items.concat(newItem),
+      text: ''
+    }));
+  }
+}
 
-  render(){
-    var i = 0;
+class TodoList extends Component {
+  render() {
     return (
       <ul>
-      {this.state.items.map((item, index) => (
-          <Item value={item[0]} checkboxValue={item[1]} dateValue={item[2]}
-          />
-      ))}
-      {/* This is a comment <AddItemButton /> */}
+        {this.props.items.map(item => (
+          <li key={item.id}>{item.text}</li>
+        ))}
       </ul>
-
-      );
-  }
-}
-
-//A page displays a list using a specific view
-class Page extends Component {
-
-  constructor(props){
-    super(props);
-    this.state = {
-      list: null,
-      view: null,
-    };
-  }
-
-  addList(list) {
-    const views = this.state.view.slice();
-    var unique = require('array-unique');
-    var mergedList = this.state.list.slice().concat(list);
-    const lists = unique(mergedList);
-    this.setState({
-      list: lists,
-      view: views,
-    });
+    );
   }
 }
 
@@ -89,7 +67,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <List />
+        <TodoApp />
       </div>
     );
   }
